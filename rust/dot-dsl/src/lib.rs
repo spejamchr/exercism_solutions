@@ -1,50 +1,41 @@
 pub mod graph {
-    type Nodes = Vec<graph_items::node::Node>;
-    type Edges = Vec<graph_items::edge::Edge>;
     type Attrs = std::collections::HashMap<String, String>;
 
     fn attrs_from_arr(arr: &[(&str, &str)]) -> Attrs {
-        arr.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
+        arr.iter()
+            .map(|(k, v)| (k.to_string(), v.to_string()))
+            .collect()
     }
 
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct Graph {
-        pub nodes: Nodes,
-        pub edges: Edges,
+        pub nodes: Vec<graph_items::node::Node>,
+        pub edges: Vec<graph_items::edge::Edge>,
         pub attrs: Attrs,
     }
 
     impl Graph {
         pub fn new() -> Self {
             Self {
-                nodes: vec![],
-                edges: vec![],
+                nodes: Vec::new(),
+                edges: Vec::new(),
                 attrs: Attrs::new(),
             }
         }
 
-        pub fn with_nodes(self, nodes: &Nodes) -> Self {
-            Self {
-                nodes: nodes.to_vec(),
-                edges: self.edges,
-                attrs: self.attrs,
-            }
+        pub fn with_nodes(mut self, nodes: &[graph_items::node::Node]) -> Self {
+            self.nodes = nodes.to_vec();
+            self
         }
 
-        pub fn with_edges(self, edges: &Edges) -> Self {
-            Self {
-                nodes: self.nodes,
-                edges: edges.to_vec(),
-                attrs: self.attrs,
-            }
+        pub fn with_edges(mut self, edges: &[graph_items::edge::Edge]) -> Self {
+            self.edges = edges.to_vec();
+            self
         }
 
-        pub fn with_attrs(self, attrs_arr: &[(&str, &str)]) -> Self {
-            Self {
-                nodes: self.nodes,
-                edges: self.edges,
-                attrs: attrs_from_arr(attrs_arr),
-            }
+        pub fn with_attrs(mut self, attrs_arr: &[(&str, &str)]) -> Self {
+            self.attrs = attrs_from_arr(attrs_arr);
+            self
         }
 
         pub fn get_node(&self, id: &str) -> Option<&graph_items::node::Node> {
@@ -70,12 +61,9 @@ pub mod graph {
                     }
                 }
 
-                pub fn with_attrs(self, attrs_arr: &[(&str, &str)]) -> Self {
-                    Self {
-                        a: self.a,
-                        b: self.b,
-                        attrs: super::super::attrs_from_arr(attrs_arr),
-                    }
+                pub fn with_attrs(mut self, attrs_arr: &[(&str, &str)]) -> Self {
+                    self.attrs = super::super::attrs_from_arr(attrs_arr);
+                    self
                 }
             }
         }
@@ -95,11 +83,9 @@ pub mod graph {
                     }
                 }
 
-                pub fn with_attrs(self, attrs_arr: &[(&str, &str)]) -> Self {
-                    Self {
-                        id: self.id,
-                        attrs: super::super::attrs_from_arr(attrs_arr),
-                    }
+                pub fn with_attrs(mut self, attrs_arr: &[(&str, &str)]) -> Self {
+                    self.attrs = super::super::attrs_from_arr(attrs_arr);
+                    self
                 }
 
                 pub fn get_attr(&self, key: &str) -> Option<&str> {
