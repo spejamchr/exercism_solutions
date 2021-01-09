@@ -27,9 +27,6 @@ impl Queen {
         let a = &self.position;
         let b = &other.position;
 
-        a.file == b.file
-            || a.rank == b.rank
-            || a.rank - a.file == b.rank - b.file
-            || a.rank + a.file == b.rank + b.file
+        a.file == b.file || a.rank == b.rank || (a.rank - b.rank).abs() == (a.file - b.file).abs()
     }
 }
