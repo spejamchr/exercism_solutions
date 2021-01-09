@@ -25,11 +25,7 @@ impl Robot {
             Direction::West => Direction::North,
         };
 
-        Self {
-            x: self.x,
-            y: self.y,
-            d,
-        }
+        Robot::new(self.x, self.y, d)
     }
 
     pub fn turn_left(self) -> Self {
@@ -40,11 +36,7 @@ impl Robot {
             Direction::West => Direction::South,
         };
 
-        Self {
-            x: self.x,
-            y: self.y,
-            d,
-        }
+        Robot::new(self.x, self.y, d)
     }
 
     pub fn advance(self) -> Self {
@@ -55,7 +47,7 @@ impl Robot {
             Direction::West => (self.x - 1, self.y),
         };
 
-        Self { x, y, d: self.d }
+        Robot::new(x, y, self.d)
     }
 
     pub fn instructions(self, instructions: &str) -> Self {
